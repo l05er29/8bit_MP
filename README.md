@@ -1,4 +1,4 @@
-# 8-bit RISC Microprocessor Design
+# 8-bit Superscalar In-order RISC Microprocessor Design
 
 In digital computing, various instruction set architectures (ISAs) exist, including:
 
