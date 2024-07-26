@@ -1,4 +1,4 @@
-# 8-bit Superscalar In-order RISC Microprocessor Design
+# 8-bit Dual Pipeline Superscalar RISC-V Processor
 
 In digital computing, various instruction set architectures (ISAs) exist, including:
 
@@ -9,15 +9,31 @@ In digital computing, various instruction set architectures (ISAs) exist, includ
 
 We have chosen the RISC architecture for our microprocessor due to its simplicity, efficiency, and adaptability.
 
-## CPU Stages
+## Introduction
 
-Our CPU is designed with a 5-stage pipeline comprising:
+Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part of our IITI SoC. This design enhances instruction throughput by executing multiple instructions per clock cycle. Leveraging a superscalar architecture, this processor aims to achieve higher performance than the non-pipelined ones.
 
-1. **Fetch**
-2. **Decode**
-3. **Execute**
-4. **Memory**
-5. **Writeback**
+## Features
+
+- **8-bit RISC-V ISA CPU Core**
+- **Dual-Issue Superscalar Architecture**
+- **5-Stage Pipeline: IF, ID, EX, MEM, WB**
+- **Harvard Architecture**
+- **RV32I Base Integer & RV32M Extensions**
+- **Two Integer ALUs**
+- **Dynamic 2-bit Branch Prediction Unit**
+- **Issue and Complete 2 Instructions/Cycle**
+- **8-bit Instruction Fetch/Data Access**
+- **32 General Purpose Registers**
+- **Instruction Memory: 256x8-bit, Little-Endian**
+- **Data Memory: 256x8-bit**
+- **Hazard Management: Instruction Issue Unit, Hazard detection Unit and Forwading Path**
+- **Pipeline Latches: IF_ID, ID_EX, EX_MEM, MEM_WB**
+- **Supports Pseudo-Instructions: MV, NOT, NEG**
+
+An in-depth explanation of our approach to designing the microprocessor and its specifications is provided below.
+  
+## Architecture Overview
 
 ## Instruction Set Architecture
 
@@ -46,20 +62,23 @@ The microprocessor employs the Harvard architecture, featuring separate memories
 
 ### Instruction Memory
 
-- **Address Space**: 64x8
+- **Address Space**: 256x8
 - **Word Size**: 8-bit
 - **Byte Ordering**: Little-endian
 - **Instruction Storage**: Each instruction is stored in 4 consecutive registers.
+- **Dual Instruction Fetch**: Fetches two 32-bit instructions per cycle, allowing parallel instruction processing.
 
 ### Data Memory
 
-- **Address Space**: 64x8
+- **Address Space**: 256x8
 - **Word Size**: 8-bit
+- **Dual-Path Read and Write**: Supports simultaneous read and write operations on two different addresses (Dual-Port Memory).
 
 ## Register File
 
 - **Registers**: 32x8-bit
 - **Special Register**: `x0` is hardwired to zero.
+  
 
 ## Control Unit
 
@@ -67,6 +86,41 @@ The control unit generates control signals based on the opcode. It is divided in
 
 1. **Main Control Unit**: Manages control signals for the data memory, register file, and various multiplexers.
 2. **ALU Control Unit**: Receives signals from both the main control unit and the instruction to generate appropriate signals for the ALU.
+
+## Arithmetic Logic Unit (ALU)
+
+The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory.A list of arithmetic and logic operations performed by ALU is given in the currently supported instruction section.
+
+### Superscalar Pipeline
+
+Our design aims to implement a superscalar architecture by giving the microprocessor two parallel data paths. This allows it to fetch, decode, and execute two instructions per clock cycle.
+
+### Dual Pipeline Stages
+
+1. **Fetch**
+   - Two instructions are fetched from the instruction memory simultaneously.
+   
+2. **Decode**
+   - Both instructions are decoded, and operands are read from the register file.
+   
+3. **Execute**
+   - Each instruction is executed in a separate ALU.
+
+4. **Memory**
+   - Memory access operations are performed for both instructions.
+
+5. **Writeback**
+   - Results of both instructions are written back to the register file.
+
+### Additional Control Logic
+
+To support dual instruction execution, additional control logic is required to handle dependencies and resource conflicts between the two instructions. This includes:
+
+- **Instruction Issuing Unit**: 
+The Instruction Issuing Unit (IIU) operates in the ID stage, decoding incoming instructions from the Instruction Memory and detecting operand dependencies. If a dependency is found, the second instruction is held in a register and a "rollback" signal adjusts the next-PC value. The held instruction is then issued in the following clock cycle.
+
+- **Next-PC Logic**:
+- Whenever the “rollback” signal is asserted in the ID stage,next PC value will be the address of next instruction (PC + 4), otherwise it is the address of the instruction after the next instruction (PC + 8). 
 
 ## Currently Supported Instructions
 
@@ -189,10 +243,6 @@ The control unit generates control signals based on the opcode. It is divided in
 
 - **SUB rd, x0, rs** computes the two's complement of the value in register `rs`, storing the result in register `rd`. This operation is used to implement the `NEG rd, rs` assembler pseudo-instruction, which negates the value in register `rs`.
 
-## Pipelining
-
-Pipelining is a technique used to enhance the performance of a microprocessor by overlapping the execution of multiple instructions. In our 8-bit RISC microprocessor design, we implement a 5-stage pipeline. Each stage of the pipeline is separated by pipeline latches (also known as pipeline registers) to hold intermediate data and control signals between stages.
-
 ### Pipeline Stages
 
 1. **IF (Instruction Fetch)**: Fetches the instruction from memory.
@@ -213,7 +263,9 @@ Pipelining is a technique used to enhance the performance of a microprocessor by
 In a pipelined microprocessor, hazards can be categorized into three main types:
 
 1. **Data Hazards:**
-   - Occur when instructions that exhibit data dependencies modify data in different stages of the pipeline.
+  
+
+ - Occur when instructions that exhibit data dependencies modify data in different stages of the pipeline.
    - **Types:**
      - **Read After Write (RAW):** A subsequent instruction tries to read a source operand before a previous instruction writes to it.
      - **Write After Read (WAR):** A subsequent instruction tries to write to a destination operand before a previous instruction reads it.
@@ -234,5 +286,6 @@ In a pipelined microprocessor, hazards can be categorized into three main types:
 - **Branch Prediction (Control Hazard):** Using algorithms to guess the outcome of a branch to minimize control hazards.
 - **Multiple Memory Access Paths (Structural Hazard):** Providing separate instruction and data memory paths to avoid conflicts.
 
-Effective hazard management is crucial for maintaining the efficiency and performance of the pipelined processor.
-if possible we will implement superscalar microprocessor by giving 2 data paths.
+## Conclusion
+
+This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput for embedded applications.
