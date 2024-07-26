@@ -21,7 +21,7 @@ Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part 
 - **Harvard Architecture**
 - **RV32I Base Integer & RV32M Extensions** (Note: Some RV32I instructions are not supported)
 - **Two Integer ALUs**
-- **Issue and Complete 2 Instructions/Cycle**
+- **Issue and Complete Atmost 2 Instructions/Cycle**
 - **8-bit Instruction Fetch/Data Access**
 - **32 General Purpose Registers**
 - **Instruction Memory: 256x8-bit, Little-Endian**
