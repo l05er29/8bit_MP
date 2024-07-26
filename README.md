@@ -91,7 +91,7 @@ The control unit generates control signals based on the opcode. It is divided in
 
 The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory.A list of arithmetic and logic operations performed by ALU is given in the currently supported instruction section.
 
-### Superscalar Pipeline
+## Superscalar Pipeline
 
 Our design aims to implement a superscalar architecture by giving the microprocessor two parallel data paths. This allows it to fetch, decode, and execute two instructions per clock cycle.
 
