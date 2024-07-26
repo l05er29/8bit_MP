@@ -28,9 +28,10 @@ Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part 
 - **Data Memory: 256x8-bit**
 - **Hazard Management: Instruction Issue Unit, Hazard detection Unit and Forwading Path**
 - **Pipeline Latches: IF_ID, ID_EX, EX_MEM, MEM_WB**
-- **Supports Pseudo-Instructions: MV, NOT, NEG**
+- **Supports Many Pseudo-Instructions: MV, NOT, NEG, BEQZ, BNEZ etc...**
 
-An in-depth explanation of our approach to designing the microprocessor and its specifications is provided below.
+An **in-depth explanation** of our approach to designing the microprocessor and its specifications is provided below.
+
 ## Contents
 
 1. [Architecture Overview](#architecture-overview)
