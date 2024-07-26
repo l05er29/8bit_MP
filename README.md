@@ -19,9 +19,8 @@ Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part 
 - **Dual-Issue Superscalar Architecture**
 - **5-Stage Pipeline: IF, ID, EX, MEM, WB**
 - **Harvard Architecture**
-- **RV32I Base Integer & RV32M Extensions**
+- **RV32I Base Integer & RV32M Extensions** (Note: Some RV32I instructions are not supported)
 - **Two Integer ALUs**
-- **Dynamic 2-bit Branch Prediction Unit**
 - **Issue and Complete 2 Instructions/Cycle**
 - **8-bit Instruction Fetch/Data Access**
 - **32 General Purpose Registers**
@@ -32,6 +31,20 @@ Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part 
 - **Supports Pseudo-Instructions: MV, NOT, NEG**
 
 An in-depth explanation of our approach to designing the microprocessor and its specifications is provided below.
+## Contents
+
+1. [Architecture Overview](#architecture-overview)
+2. [Instruction Set Architecture](#instruction-set-architecture)
+3. [Memory Architecture](#memory-architecture)
+4. [Register File](#register-file)
+5. [Control Unit](#control-unit)
+6. [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
+7. [Superscalar Pipeline](#superscalar-pipeline)
+8. [Pipeline Stages](#pipeline-stages)
+9. [Pipeline Latches](#pipeline-latches)
+10. [Hazards](#hazards)
+11. [Currently Supported Instructions](#currently-supported-instructions)
+12. [Conclusion](#conclusion)
   
 ## Architecture Overview
 
@@ -56,6 +69,11 @@ We implement basic instructions from the RV32I Base Integer Instruction Set. The
   0000 (unused) | immediate [27:25] | rs2 [24:20] | rs1 [19:15] | funct3 [14:12] | immediate [11:7] | opcode [6:0]
   ```
 
+- **B-type**:
+  ```
+  000 (unused) | immediate [28:25] | rs2 [24:20] | rs1 [19:15] | funct3 [14:12] | immediate [11:8] | 0 (unused) | opcode [6:0]
+  ```
+
 ## Memory Architecture
 
 The microprocessor employs the Harvard architecture, featuring separate memories for instructions and data. This approach enhances performance by allowing simultaneous access to both instruction and data memories.
@@ -78,18 +96,20 @@ The microprocessor employs the Harvard architecture, featuring separate memories
 
 - **Registers**: 32x8-bit
 - **Special Register**: `x0` is hardwired to zero.
+- **Supports Dual Write Ports**: Handles two sets of inputs for reading and writing to registers simultaneously.
+- **Priority Handling for Writes**: Prioritizes the second write operation (writedata_2) if both write requests target the same register.
   
 
 ## Control Unit
 
-The control unit generates control signals based on the opcode. It is divided into two levels:
+The control unit generates control signals for both instructions based on the opcode. It is divided into two levels:
 
 1. **Main Control Unit**: Manages control signals for the data memory, register file, and various multiplexers.
 2. **ALU Control Unit**: Receives signals from both the main control unit and the instruction to generate appropriate signals for the ALU.
 
 ## Arithmetic Logic Unit (ALU)
 
-The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory.A list of arithmetic and logic operations performed by ALU is given in the currently supported instruction section.
+The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory. A list of arithmetic and logic operations performed by ALU is given in the currently supported instruction section.
 
 ## Superscalar Pipeline
 
@@ -116,132 +136,11 @@ Our design aims to implement a superscalar architecture by giving the microproce
 
 To support dual instruction execution, additional control logic is required to handle dependencies and resource conflicts between the two instructions. This includes:
 
-- **Instruction Issuing Unit**: 
+- **Instruction Issuing Unit** : 
 The Instruction Issuing Unit (IIU) operates in the ID stage, decoding incoming instructions from the Instruction Memory and detecting operand dependencies. If a dependency is found, the second instruction is held in a register and a "rollback" signal adjusts the next-PC value. The held instruction is then issued in the following clock cycle.
 
-- **Next-PC Logic**:
+- **Next-PC Logic** :
 - Whenever the “rollback” signal is asserted in the ID stage,next PC value will be the address of next instruction (PC + 4), otherwise it is the address of the instruction after the next instruction (PC + 8). 
-
-## Currently Supported Instructions
-
-### RV32I Base Integer Instruction Set
-
-1. **ADDI** 
-   - Adds 8-bit immediate to register `rs1`.
-   - Result stored in `rd`.
-
-2. **SLTI** 
-   - Sets `rd` to 1 if `rs1` is less than the immediate (signed comparison), otherwise 0.
-
-3. **SLTIU** 
-   - Sets `rd` to 1 if `rs1` is less than the immediate (unsigned comparison), otherwise 0.
-
-4. **XORI** 
-   - Performs bitwise XOR on `rs1` and the 8-bit immediate.
-   - Result stored in `rd`.
-
-5. **ORI** 
-   - Performs bitwise OR on `rs1` and the 8-bit immediate.
-   - Result stored in `rd`.
-
-6. **ANDI** 
-   - Performs bitwise AND on `rs1` and the 8-bit immediate.
-   - Result stored in `rd`.
-
-7. **SLLI** 
-   - Shifts `rs1` left logically by the shift amount in the lower 5 bits of the immediate.
-   - Result stored in `rd`.
-
-8. **SLRI** 
-   - Shifts `rs1` right logically by the shift amount in the lower 5 bits of the immediate.
-   - Result stored in `rd`.
-
-9. **ADD** 
-   - Adds `rs1` and `rs2`.
-   - Result stored in `rd`.
-
-10. **SUB** 
-    - Subtracts `rs2` from `rs1`.
-    - Result stored in `rd`.
-
-11. **SLL** 
-    - Shifts `rs1` left logically by the shift amount in the lower 5 bits of `rs2`.
-    - Result stored in `rd`.
-
-12. **SLR** 
-    - Shifts `rs1` right logically by the shift amount in the lower 5 bits of `rs2`.
-    - Result stored in `rd`.
-
-13. **SLT** 
-    - Sets `rd` to 1 if `rs1` is less than `rs2` (signed comparison), otherwise 0.
-
-14. **SLTU** 
-    - Sets `rd` to 1 if `rs1` is less than `rs2` (unsigned comparison), otherwise 0.
-
-15. **SRA** 
-    - Shifts `rs1` right arithmetically by the shift amount in the lower 5 bits of `rs2`.
-    - Result stored in `rd`.
-
-16. **XOR** 
-    - Performs bitwise XOR on `rs1` and `rs2`.
-    - Result stored in `rd`.
-
-17. **AND** 
-    - Performs bitwise AND on `rs1` and `rs2`.
-    - Result stored in `rd`.
-
-18. **OR** 
-    - Performs bitwise OR on `rs1` and `rs2`.
-    - Result stored in `rd`.
-
-19. **LOAD** 
-    - Loads an 8-bit value from memory.
-    - Stores it in `rd`.
-
-20. **STORE** 
-    - Stores an 8-bit value from `rs2` to memory.
-
-### RV32M Standard Extension for Integer Multiplication and Division
-
-21. **MUL** 
-    - Multiplies signed `rs1` by signed `rs2`.
-    - Lower XLEN bits stored in `rd`.
-
-22. **MULH** 
-    - Multiplies signed `rs1` by signed `rs2`.
-    - Upper XLEN bits stored in `rd`.
-
-23. **MULSU** 
-    - Multiplies signed `rs1` by unsigned `rs2`.
-    - Upper XLEN bits stored in `rd`.
-
-24. **MULHU** 
-    - Multiplies unsigned `rs1` by unsigned `rs2`.
-    - Upper XLEN bits stored in `rd`.
-
-25. **DIV** 
-    - Divides signed `rs1` by signed `rs2`.
-    - Result stored in `rd`.
-
-26. **DIVU** 
-    - Divides unsigned `rs1` by unsigned `rs2`.
-    - Result stored in `rd`.
-
-27. **REM** 
-    - Computes remainder of signed `rs1` divided by signed `rs2`.
-    - Result stored in `rd`.
-
-28. **REMU** 
-    - Computes remainder of unsigned `rs1` divided by unsigned `rs2`.
-    - Result stored in `rd`.
-
-### Notes
-
-- **ADDI rd, rs1, 0** is utilized to implement the `MV rd, rs1` assembler pseudo-instruction, which moves the value from register `rs1` to register `rd`.
-
-- **XORI rd, rs1, -1** performs a bitwise logical inversion of the value in register `rs1`, effectively implementing the `NOT rd, rs1` assembler pseudo-instruction.
-
-- **SUB rd, x0, rs** computes the two's complement of the value in register `rs`, storing the result in register `rd`. This operation is used to implement the `NEG rd, rs` assembler pseudo-instruction, which negates the value in register `rs`.
 
 ### Pipeline Stages
 
@@ -263,8 +162,6 @@ The Instruction Issuing Unit (IIU) operates in the ID stage, decoding incoming i
 In a pipelined microprocessor, hazards can be categorized into three main types:
 
 1. **Data Hazards:**
-  
-
  - Occur when instructions that exhibit data dependencies modify data in different stages of the pipeline.
    - **Types:**
      - **Read After Write (RAW):** A subsequent instruction tries to read a source operand before a previous instruction writes to it.
@@ -279,12 +176,183 @@ In a pipelined microprocessor, hazards can be categorized into three main types:
    - Occur when hardware resources are insufficient to support all the concurrent operations in the pipeline.
    - **Example:** If the instruction and data memory share the same memory and both stages need access simultaneously, a conflict occurs.
 
-### Hazard Mitigation Techniques
+### Hazard Handling
 
-- **Forwarding (Data Hazard):** Bypassing data from one pipeline stage to another without waiting for it to be written and read from the register file.
-- **Pipeline Stalling (Data & Control Hazard):** Pausing the pipeline until the hazard is resolved.
-- **Branch Prediction (Control Hazard):** Using algorithms to guess the outcome of a branch to minimize control hazards.
-- **Multiple Memory Access Paths (Structural Hazard):** Providing separate instruction and data memory paths to avoid conflicts.
+In the design of our superscalar processor, various strategies are employed to handle different types of hazards, ensuring smooth and accurate execution of instructions. Here’s a detailed explanation of how each type of hazard is managed:
+
+#### Data Hazards
+
+1. **Read After Write (RAW) Hazards**:
+   - **Forwarding Path**: To resolve RAW hazards, we implement a forwarding mechanism. This allows the processor to forward the result of an instruction that is yet to be written back to the register file directly to the subsequent instruction that needs it, bypassing the normal data path. This ensures that the dependent instruction gets the correct data without waiting for the write-back stage to complete.
+
+2. **Write After Read (WAR) Hazards**:
+   - **In-Order Execution**: WAR hazards typically occur in out-of-order execution scenarios. Since our processor executes instructions in order, WAR hazards are inherently avoided. The read operation always occurs before the subsequent write operation, thus eliminating the need for additional handling mechanisms.
+
+3. **Write After Write (WAW) Hazards**:
+   - **Dual Data Paths**: WAW hazards are possible in our parallel execution environment. To address this, we design the processor with two data paths where the sequentially latest instruction is always implemented in the second data path. If a WAW hazard occurs, the write data from the second data path is prioritized and written back into the register, ensuring the correct value is stored.
+
+#### Structural Hazards
+
+1. **Register File Access**:
+   - **Simultaneous Read and Write**: During the read operation, if a register is being read from and simultaneously written to, the module prioritizes the written data. This means that the data being written (from `write_data_2` if `reg_write_2` is active) will be reflected in the read operation output rather than the old data.
+
+2. **Data Memory Access**:
+   - **Memory Conflicts**: Simultaneous read and write operations on the same address from different data paths are possible. To handle this, the write data is bypassed to the read data port instead of reading the old data stored at that address. This ensures that the read operation reflects the most recent write operation's data, maintaining data integrity across the memory accesses.
+
+#### Control Hazards
+
+**Simple Flush Mechanism**:
+   - **Pipeline Flush**: To handle control hazards, we implement a simple flush mechanism. If a branch is taken or a jump instruction is encountered, the instructions in the pipeline that are no longer valid are flushed. This prevents incorrect instructions from being executed, ensuring the correctness of the program flow.
+
+
+## Currently Supported Instructions
+
+### RV32I Base Integer Instruction Set
+
+### I-Type Instructions
+
+1. **ADDI**  
+   - Adds 8-bit immediate to register `rs1`.  
+   - Result stored in `rd`.
+
+2. **SLTI**  
+   - Sets `rd` to 1 if `rs1` is less than the immediate (signed comparison), otherwise 0.
+
+3. **SLTIU**  
+   - Sets `rd` to 1 if `rs1` is less than the immediate (unsigned comparison), otherwise 0.
+
+4. **XORI**  
+   - Performs bitwise XOR on `rs1` and the 8-bit immediate.  
+   - Result stored in `rd`.
+
+5. **ORI**  
+   - Performs bitwise OR on `rs1` and the 8-bit immediate.  
+   - Result stored in `rd`.
+
+6. **ANDI**  
+   - Performs bitwise AND on `rs1` and the 8-bit immediate.  
+   - Result stored in `rd`.
+
+7. **SLLI**  
+   - Shifts `rs1` left logically by the shift amount in the lower 5 bits of the immediate.  
+   - Result stored in `rd`.
+
+8. **SLRI**  
+   - Shifts `rs1` right logically by the shift amount in the lower 5 bits of the immediate.  
+   - Result stored in `rd`.
+
+### R-Type Instructions
+
+9. **ADD**  
+   - Adds `rs1` and `rs2`.  
+   - Result stored in `rd`.
+
+10. **SUB**  
+    - Subtracts `rs2` from `rs1`.  
+    - Result stored in `rd`.
+
+11. **SLL**  
+    - Shifts `rs1` left logically by the shift amount in the lower 5 bits of `rs2`.  
+    - Result stored in `rd`.
+
+12. **SLR**  
+    - Shifts `rs1` right logically by the shift amount in the lower 5 bits of `rs2`.  
+    - Result stored in `rd`.
+
+13. **SLT**  
+    - Sets `rd` to 1 if `rs1` is less than `rs2` (signed comparison), otherwise 0.
+
+14. **SLTU**  
+    - Sets `rd` to 1 if `rs1` is less than `rs2` (unsigned comparison), otherwise 0.
+
+15. **SRA**  
+    - Shifts `rs1` right arithmetically by the shift amount in the lower 5 bits of `rs2`.  
+    - Result stored in `rd`.
+
+16. **XOR**  
+    - Performs bitwise XOR on `rs1` and `rs2`.  
+    - Result stored in `rd`.
+
+17. **AND**  
+    - Performs bitwise AND on `rs1` and `rs2`.  
+    - Result stored in `rd`.
+
+18. **OR**  
+    - Performs bitwise OR on `rs1` and `rs2`.  
+    - Result stored in `rd`.
+
+### Load and Store Instructions
+
+19. **LOAD**  
+    - Loads an 8-bit value from memory.  
+    - Stores it in `rd`.
+
+20. **STORE**  
+    - Stores an 8-bit value from `rs2` to memory.
+
+### Branch Instructions
+
+21. **BEQ**  
+    - Branch to the target address if `rs1` equals `rs2`.  
+
+22. **BNE**  
+    - Branch to the target address if `rs1` does not equal `rs2`.  
+
+23. **BLT**  
+    - Branch to the target address if `rs1` is less than `rs2` (signed).  
+
+24. **BGE**  
+    - Branch to the target address if `rs1` is greater than or equal to `rs2` (signed).  
+
+25. **BLTU**  
+    - Branch to the target address if `rs1` is less than `rs2` (unsigned).  
+
+26. **BGEU**  
+    - Branch to the target address if `rs1` is greater than or equal to `rs2` (unsigned).  
+
+### RV32M Standard Extension for Integer Multiplication and Division
+
+27. **MUL**  
+    - Multiplies signed `rs1` by signed `rs2`.  
+    - Lower XLEN bits stored in `rd`.
+
+28. **MULH**  
+    - Multiplies signed `rs1` by signed `rs2`.  
+    - Upper XLEN bits stored in `rd`.
+
+29. **MULSU**  
+    - Multiplies signed `rs1` by unsigned `rs2`.  
+    - Upper XLEN bits stored in `rd`.
+
+30. **MULHU**  
+    - Multiplies unsigned `rs1` by unsigned `rs2`.  
+    - Upper XLEN bits stored in `rd`.
+
+31. **DIV**  
+    - Divides signed `rs1` by signed `rs2`.  
+    - Result stored in `rd`.
+
+32. **DIVU**  
+    - Divides unsigned `rs1` by unsigned `rs2`.  
+    - Result stored in `rd`.
+
+33. **REM**  
+    - Computes remainder of signed `rs1` divided by signed `rs2`.  
+    - Result stored in `rd`.
+
+34. **REMU**  
+    - Computes remainder of unsigned `rs1` divided by unsigned `rs2`.  
+    - Result stored in `rd`.
+
+---
+
+### Notes
+
+- **ADDI rd, rs1, 0** is utilized to implement the `MV rd, rs1` assembler pseudo-instruction, which moves the value from register `rs1` to register `rd`.
+
+- **XORI rd, rs1, -1** performs a bitwise logical inversion of the value in register `rs1`, effectively implementing the `NOT rd, rs1` assembler pseudo-instruction.
+
+- **SUB rd, x0, rs** computes the two's complement of the value in register `rs`, storing the result in register `rd`. This operation is used to implement the `NEG rd, rs` assembler pseudo-instruction, which negates the value in register `rs`.
 
 ## Conclusion
 
