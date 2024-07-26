@@ -11,7 +11,14 @@ We have chosen the RISC architecture for our microprocessor due to its simplicit
 
 ## Introduction
 
-Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part of our IITI SoC. This design enhances instruction throughput by executing multiple instructions per clock cycle. Leveraging a superscalar architecture, this processor aims to achieve higher performance than the non-pipelined ones.
+Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part of our IITI SoC Project PS -3. This design enhances instruction throughput by executing multiple instructions per clock cycle. Leveraging a superscalar architecture, this processor aims to achieve higher performance than the non-pipelined ones.
+
+#### Team Members
+
+- B.Dinesh Lakshman
+- G.Sushant Reddy
+- J.L.Manaswini
+- M.Devi Amrutha
 
 ## Features
 
