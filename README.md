@@ -209,7 +209,7 @@ In the design of our superscalar processor, various strategies are employed to h
 
 #### Control Hazards
 
-**Simple Flush Mechanism**:
+   **Simple Flush Mechanism**:
    - **Pipeline Flush**: To handle control hazards, we implement a simple flush mechanism. If a branch is taken or a jump instruction is encountered, the instructions in the pipeline that are no longer valid are flushed. This prevents incorrect instructions from being executed, ensuring the correctness of the program flow.
 
 
@@ -361,6 +361,7 @@ In the design of our superscalar processor, various strategies are employed to h
 - **XORI rd, rs1, -1** performs a bitwise logical inversion of the value in register `rs1`, effectively implementing the `NOT rd, rs1` assembler pseudo-instruction.
 
 - **SUB rd, x0, rs** computes the two's complement of the value in register `rs`, storing the result in register `rd`. This operation is used to implement the `NEG rd, rs` assembler pseudo-instruction, which negates the value in register `rs`.
+- In the same way many other pseudo instructions can be implemented by just manipulating the already existing instructions in the RISC-V ISA.
 - Detailed information about each instruction, their opcodes, and different function codes can be found [here](https://msyksphinz-self.github.io/riscv-isadoc/html/rvi.html#lui). This resource was also used as a reference while writing the ISA for our microprocessor.
 
 ## Conclusion
