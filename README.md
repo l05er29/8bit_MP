@@ -60,10 +60,17 @@ In digital computing, various instruction set architectures (ISAs) exist, includ
 - **EPIC** (Explicitly Parallel Instruction Computing)
 
 We have chosen the RISC architecture for our microprocessor due to its simplicity, efficiency, and adaptability.
-we designed the microporcessor in three stages 
-1. until mid evaluation - we studied many research papers and surfed the web for any resources for isa and architecture of the microprocessor and finished a non pipelined microprocressor which supports artithmetic and logical operations
-2. until july 23 - we pipelined the microprocessor along with some hazard detection units and handled raw and control hazards
-3. until july  
+
+**Microprocessor Development Phases:**
+
+1. **Initial Design (Mid-Evaluation):**  
+   We explored research papers and online resources to understand ISA and microprocessor architecture. We completed a non-pipelined microprocessor capable of arithmetic and logical operations.
+
+2. **Pipelining Implementation (Until July 20):**  
+   We advanced to a pipelined microprocessor, incorporating hazard detection units to handle raw and control hazards effectively.
+
+3. **Enhancement Phase (Until July 27):**  
+   With the extended submission deadline, we refined the design by adopting a superscalar architecture. This approach, which involved duplicating datapaths and managing data hazards, was chosen over complex out-of-order execution. We successfully implemented the instruction issuing unit, next PC logic, and forwarding paths based on insights from research papers.
 
 ## Instruction Set Architecture
 
