@@ -41,11 +41,13 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 
 ## Contents
 
+Here's the updated structure with proper syntax for accessing the sections:
+
 1. [Architecture Overview](#architecture-overview)
 2. [Instruction Set Architecture](#instruction-set-architecture)
 3. [Memory Architecture](#memory-architecture)
 4. [Register File](#register-file)
-5. [Instruction Decoding and Immediate Data Extraction (Decoder)](#Instruction-Decoding-and-Immediate-Data-Extraction-(Decoder))
+5. [Instruction Decoding and Immediate Data Extraction (Decoder)](#instruction-decoding-and-immediate-data-extraction-decoder)
 6. [Control Unit](#control-unit)
 7. [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
 8. [Superscalar Pipeline](#superscalar-pipeline)
@@ -53,8 +55,8 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 10. [Pipeline Latches](#pipeline-latches)
 11. [Hazards](#hazards)
 12. [Currently Supported Instructions](#currently-supported-instructions)
-13. [Verification & Results](#Verification-&-Results)
-14. [References](#References)
+13. [Verification & Results](#verification--results)
+14. [References](#references)
 15. [Conclusion](#conclusion)
   
 ## Architecture Overview
