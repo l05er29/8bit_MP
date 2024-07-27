@@ -418,17 +418,16 @@ In the design of our superscalar processor, various strategies are employed to h
 - The design has been thoroughly tested and verified, demonstrating that it handles a wide range of instructions correctly and efficiently. The results confirm the processor’s capability to execute multiple instructions per cycle, achieving the desired performance improvements over traditional non-pipelined processors.
 
 **This is where we started ...**
-                        
-  - Schematic Diagram of Non-Pipelined Microprocessor
-  - ![image](https://github.com/user-attachments/assets/da627b6f-8f6b-4825-9ca8-28301f38782c)
+- Schematic Diagram of Non-Pipelined Microprocessor
+   ![image](https://github.com/user-attachments/assets/da627b6f-8f6b-4825-9ca8-28301f38782c)
 
-   - Corresponding simulation for the non pipelined processor
-  ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
-
-
-**This is where we ended ...**
+**And, This is where we ended ...**
  - Schematic Diagram of Superscalar Microprocessor
 ![image](https://github.com/user-attachments/assets/6de86e54-10d9-4ea5-b2a1-d1e99a10c53d)
+
+ - Corresponding simulation for the non pipelined processor
+  ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
+
  -  Corresponding simulation for the superscalar processor
  ![image](https://github.com/user-attachments/assets/6875dcb8-261d-4eb5-89a5-d989fb0d20ee)
 
