@@ -95,7 +95,7 @@ We implement basic instructions from the RV32I Base Integer Instruction Set. The
 
 2. **Register Addressing**:
    - Operand is specified in a register.
-   - Used in: `ADD`, `SUB`, `SLL`, `SRL`, `SLT`, `SLTU`, `SRA`, `XOR`, `AND`, `OR`.
+   - Used in: `ADD`, `SUB`, `SLL`, `SRL`, `SLT`, `SLTU`, `SRA`, `XOR`, `AND`, `OR`, `MUL`, `MULH`, `MULSU`, `MULHU`, `DIV`, `DIVU`, `REM`, `REMU`
 
 3. **Base + Offset (Displacement) Addressing**:
    - Operand is at an address computed by adding an offset to a base register.
