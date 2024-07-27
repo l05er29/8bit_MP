@@ -4,13 +4,6 @@
 
 Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as part of the **IITI SoC Project PS-3**. Implemented in **Verilog HDL**, this microprocessor is designed to significantly enhance instruction throughput by executing multiple instructions per clock cycle. By leveraging a sophisticated superscalar architecture, it aims to surpass the performance of traditional non-pipelined processors. The dual-pipeline design facilitates simultaneous execution of multiple instructions, thus optimizing computational efficiency and achieving superior processing capabilities.
 
-#### Team Members (Team - 3)
-
-- B.Dinesh Lakshman
-- G.Sushant Reddy
-- J.L.Manaswini
-- M.Devi Amrutha
-
 ## Features
 
 - **8-bit RISC-V ISA CPU Core**
@@ -48,7 +41,8 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 13. [Currently Supported Instructions](#currently-supported-instructions)
 14. [Verification & Results](#verification--results)
 15. [References](#references)
-16. [Conclusion](#conclusion)
+16. [Contributions](#Contributions)
+17. [Conclusion](#conclusion)
   
 ## Architecture Overview
 
@@ -460,7 +454,60 @@ the first two branches are getting executed
 
 - https://drive.google.com/drive/folders/1865gQ5SyB4dZ4EoLMbSYr67GkDQLMwet?usp=sharing   (Contains some research Papers and Notes)
 
+## Contributions
 
+**This project was a collaborative effort. Below are the contributions of each team member :**
+
+### Team Members of Team - 3
+
+#### 1. B.Dinesh Lakshman
+- **Role**: Project Lead
+- **Contributions**:
+  - Architecture design
+  - Debugging and testing
+  - Implementation of the Superscalar Architecuture
+  - Integration of Instruction Issuing Unit and Next PC Logic
+  - Designed Control Unit and ISA and Modified Modules to accomodate for the new data hazards etc...
+  - Documentation and scientific accuracy review
+
+#### [Teammate 1's Name]
+- **Role**: Hardware Designer
+- **Contributions**:
+  - Design and implementation of the ALU
+  - Development of branch and jump instruction support
+  - Debugging and testing
+
+#### [Teammate 2's Name]
+- **Role**: Software Developer
+- **Contributions**:
+  - Writing and testing assembly code for debugging
+  - Development of the instruction issuing unit module
+  - Software-based hazard detection
+
+#### [Teammate 3's Name]
+- **Role**: Research Analyst
+- **Contributions**:
+  - Conducted extensive research on ISA and microprocessor architecture
+  - Provided insights into pipelining and superscalar architecture
+  - Contributed to documentation on novel SIMD MAC and AF architecture
+
+#### [Teammate 4's Name]
+- **Role**: Documentation Specialist
+- **Contributions**:
+  - Managed project documentation
+  - Created diagrams for the README file
+  - Ensured clarity and completeness of documentation
+
+#### [Teammate 5's Name]
+- **Role**: Testing and Validation Engineer
+- **Contributions**:
+  - Performed extensive testing of all modules
+  - Developed test benches in Verilog
+  - Validated the performance and accuracy of the microprocessor
+
+---
+
+Each entry should be tailored to the specific roles and contributions of your teammates. Make sure to give credit where it's due and highlight the key aspects of each person's work on the project.
 ## Conclusion
 
 This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput. The processor was designed with flexibility in mind, allowing it to execute many of the standard RISC-V assembly instructions correctly, as it directly adapts general instruction codes for compatibility with existing RISC-V assemblers.
