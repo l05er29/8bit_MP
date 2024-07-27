@@ -456,6 +456,8 @@ the first two branches are getting executed
 
 - https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf (For ISA)
 
+- https://github.com/riscv-non-isa/riscv-asm-manual/blob/main/riscv-asm.md#-a-listing-of-standard-risc-v-pseudoinstructions (For Pseudo Instructions)
+
 - https://ijrpr.com/uploads/V5ISSUE4/IJRPR24834.pdf (For Microprocessor)
 
 - https://drive.google.com/drive/folders/1865gQ5SyB4dZ4EoLMbSYr67GkDQLMwet?usp=sharing   (Contains some research Papers and Notes)
