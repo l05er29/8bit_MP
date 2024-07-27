@@ -435,7 +435,7 @@ In the design of our superscalar processor, various strategies are employed to h
 
 
 **Branch instructions** 
-The branch handling in this superscaler processor is done in the decode stage itself. When the branch decision gets taken the program counter is updated according to the offset values form the immediate data, subsequently in which set the branch gets executed also plays a role and that is manageed accordingly by the rollback signal.
+The branch handling in this superscalar processor is done in the decode stage itself. When the branch decision gets taken the program counter is updated according to the offset values form the immediate data, subsequently in which set the branch gets executed also plays a role and that is manageed accordingly by the rollback signal.
 The following are the instructions used for esting the branching unit and are executed along with other instruction in the instruction memory:
 ```
 BNEQ x2,x1,3
