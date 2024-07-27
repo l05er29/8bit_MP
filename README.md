@@ -167,7 +167,7 @@ The control unit generates control signals for both instructions based on the op
 
 ## Arithmetic Logic Unit (ALU)
 
-The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory. A list of arithmetic and logic operations performed by ALU is given in the currently supported instruction section.
+The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory. A list of arithmetic and logic operations performed by ALU is given in the  [Currently Supported Instructions](#currently-supported-instructions) section.
 
 ## Superscalar Pipeline
 
@@ -448,6 +448,22 @@ In the design of our superscalar processor, various strategies are employed to h
 This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput. The processor was designed with flexibility in mind, allowing it to execute many of the standard RISC-V assembly instructions correctly, as it directly adapts general instruction codes for compatibility with existing RISC-V assemblers.
 
 While the current design has achieved significant improvements in performance, some enhancements were not completed due to time constraints. Notably, a two-bit dynamic branch predictor was intended to be implemented to improve branch prediction accuracy. This feature, if completed, would have further optimized instruction throughput by reducing branch mispredictions and their associated penalties.
+
+### Advantages
+
+- Increased Throughput
+- Parallelism
+- Reduced Latency for Independent Instructions
+- Enhanced Performance
+- Harvard Architecture
+
+### Disadvantages
+
+- Increased Complexity
+- Resource Conflicts
+- Higher Power Consumption
+- Increased Area
+- Complex Hazard Management
 
 Future improvements that could further enhance the microprocessor’s capabilities include:
 
