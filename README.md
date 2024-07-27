@@ -45,22 +45,23 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 2. [Instruction Set Architecture](#instruction-set-architecture)
 3. [Memory Architecture](#memory-architecture)
 4. [Register File](#register-file)
-5. [Control Unit](#control-unit)
-6. [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
-7. [Superscalar Pipeline](#superscalar-pipeline)
-8. [Pipeline Stages](#pipeline-stages)
-9. [Pipeline Latches](#pipeline-latches)
-10. [Hazards](#hazards)
-11. [Currently Supported Instructions](#currently-supported-instructions)
-12. [Verification & Results](#Verification-&-Results)
-13. [References](#References)
-14. [Conclusion](#conclusion)
+5. [Instruction Decoding and Immediate Data Extraction (Decoder)](#Instruction-Decoding-and-Immediate-Data-Extraction-(Decoder))
+6. [Control Unit](#control-unit)
+7. [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
+8. [Superscalar Pipeline](#superscalar-pipeline)
+9. [Pipeline Stages](#pipeline-stages)
+10. [Pipeline Latches](#pipeline-latches)
+11. [Hazards](#hazards)
+12. [Currently Supported Instructions](#currently-supported-instructions)
+13. [Verification & Results](#Verification-&-Results)
+14. [References](#References)
+15. [Conclusion](#conclusion)
   
 ## Architecture Overview
 
 ## Instruction Set Architecture
 
-We implement basic instructions from the RV32I Base Integer Instruction Set. These instructions are all 32 bits in length and aligned on a four-byte boundary in memory. Our base ISA includes three instruction formats: R-type, I-type, and S-type.
+We implement basic instructions from the RV32I Base Integer Instruction Set. These instructions are all 32 bits in length and aligned on a four-byte boundary in memory. Our base ISA includes three instruction formats: R-type, I-type, S-type, and B-type.
 
 ### Instruction Formats
 
@@ -109,6 +110,12 @@ The microprocessor employs the Harvard architecture, featuring separate memories
 - **Supports Dual Write Ports**: Handles two sets of inputs for reading and writing to registers simultaneously.
 - **Priority Handling for Writes**: Prioritizes the second write operation (writedata_2) if both write requests target the same register.
   
+## Instruction Decoding and Immediate Data Extraction (Decoder)
+
+- The **Instruction_splitter** module decodes the two incoming parallel instructions. This module identifies the instruction types and breaks them down into their constituent parts for further processing.
+
+- The **Imm_data** module extracts the immediate data based on the instruction format. It supports various instruction formats, including I-type, S-type, and B-type, ensuring that immediate values are correctly parsed and made available for instruction execution.
+
 
 ## Control Unit
 
