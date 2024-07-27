@@ -28,12 +28,15 @@ module registerFile(
 );
     integer i;
     reg [7:0] registers [31:0];
+    integer file;  // File descriptor
+    reg first_write;  // Flag to indicate first write
 
-    // Initialize registers
+    // Initialize registers and the first_write flag
     initial begin
         for (i = 0; i < 32; i = i + 1) begin
             registers[i] = 8'd0;
         end
+        first_write = 1;
     end
     
     // Ensure register 0 is always zero
@@ -102,6 +105,27 @@ module registerFile(
                 writedata_out_1 <= writedata_1;
                 reg_write_out_1 <= reg_write_1;
             end
+        end
+    end
+
+    // Write the contents of the register file to a text file
+    always @(*) begin
+        // Open file in write mode
+        file = $fopen("register_contents.txt", "w");
+        if (file) begin
+            if (first_write) begin
+                // Write headers to the file
+                $fwrite(file, "%-10s %-10s %-10s\n", "regno.", "value", "deci");
+                first_write = 0;  // Set flag to false after writing headers
+            end
+            for (i = 0; i < 32; i = i + 1) begin
+                // Write register number, binary value, and decimal value to the file
+                $fwrite(file, "%-10d %-10b (%d)\n", i, registers[i], registers[i]);
+            end
+            // Close the file
+            $fclose(file);
+        end else begin
+            $display("Error: Could not open file for writing.");
         end
     end
 
