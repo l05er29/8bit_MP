@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 27.07.2024 02:09:05
-// Design Name: 
-// Module Name: branch_unit
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module branch_unit(input branch_in1,branch_in2,
 input [2:0] funct3_1,
@@ -37,8 +17,6 @@ begin
     
  if (branch_in1) begin
     case (funct3_1)
-     /*3'b000://jump condition
-        branch=1;*/
       3'b000: // BEQ
         branch1out = (rd1_1 == rd2_1);
       3'b001: // BNE
@@ -56,9 +34,7 @@ begin
     endcase     
   end
   if(branch_in2) begin
-  case (funct3_2)
-     /*3'b000://jump condition
-        branch=1;*/
+  case (funct3_2)    
       3'b000: // BEQ
         branch2out = (rd1_2 == rd2_2);
       3'b001: // BNE
