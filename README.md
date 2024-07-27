@@ -4,7 +4,7 @@
 
 Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as part of the **IITI SoC Project PS-3**. Implemented in **Verilog HDL**, this microprocessor is designed to significantly enhance instruction throughput by executing multiple instructions per clock cycle. By leveraging a sophisticated superscalar architecture, it aims to surpass the performance of traditional non-pipelined processors. The dual-pipeline design facilitates simultaneous execution of multiple instructions, thus optimizing computational efficiency and achieving superior processing capabilities.
 
-#### Team Members
+#### Team Members (Team - 3)
 
 - B.Dinesh Lakshman
 - G.Sushant Reddy
@@ -35,7 +35,7 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 
 1. [Architecture Overview](#architecture-overview)
 2. [Instruction Set Architecture](#instruction-set-architecture)
-3. [Addressing Modes ](#Addressing-Modes)
+3. [Addressing Modes](#Addressing-Modes)
 4. [Memory Architecture](#memory-architecture)
 5. [Register File](#register-file)
 6. [Instruction Decoding and Immediate Data Extraction (Decoder)](#instruction-decoding-and-immediate-data-extraction-decoder)
@@ -66,11 +66,21 @@ We have chosen the RISC architecture for our microprocessor due to its simplicit
 1. **Initial Design (Mid-Evaluation):**  
    We explored research papers and online resources to understand ISA and microprocessor architecture. We completed a non-pipelined microprocessor capable of arithmetic and logical operations.
 
-2. **Pipelining Implementation (Until July 20):**  
+   ![image](https://github.com/user-attachments/assets/64e7f176-2236-4e3a-bae8-9f8bcb286429)
+
+
+3. **Pipelining Implementation (Until July 20):**  
    We advanced to a pipelined microprocessor, incorporating hazard detection units to handle raw and control hazards effectively.
 
-3. **Enhancement Phase (Until July 27):**  
+   ![117547053-f932fe00-b046-11eb-91af-9291291d4f52](https://github.com/user-attachments/assets/55df8e2e-3487-479a-9202-e5d3c6ee8b68)
+
+5. **Enhancement Phase (Until July 27):**  
    With the extended submission deadline, we refined the design by adopting a superscalar architecture. This approach, which involved duplicating datapaths and managing data hazards, was chosen over complex out-of-order execution. We successfully implemented the instruction issuing unit, next PC logic, and forwarding paths based on insights from research papers.
+
+   ![image](https://github.com/user-attachments/assets/90db8592-ab90-41df-ab93-29e743f75cec)
+
+   **Note: Every part of the schematic Diagram is not implemented these are just used as a references for our processor design in each stage. Actual Schematics are shown in Verification and Results Section**
+
 
 ## Instruction Set Architecture
 
@@ -406,7 +416,17 @@ In the design of our superscalar processor, various strategies are employed to h
 
 ## Verification & Results
 
-This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput for embedded applications.
+- As we adapted the general instruction codes from the RISC-V ISA, our processor is fully compatible with many online RISC-V assemblers. This ensures that it implements instructions accurately and allows for seamless integration with existing tools and frameworks. 
+- The design has been thoroughly tested and verified, demonstrating that it handles a wide range of instructions correctly and efficiently. The results confirm the processor’s capability to execute multiple instructions per cycle, achieving the desired performance improvements over traditional non-pipelined processors.
+
+**This is where we started ...**
+                        
+  - Schematic Diagram of Non-Pipelined Microprocessor
+
+**This is where we ended ...**
+![image](https://github.com/user-attachments/assets/6de86e54-10d9-4ea5-b2a1-d1e99a10c53d)
+  - Schematic Diagram of Superscalar Microprocessor
+
 
 ## References
 
@@ -425,4 +445,18 @@ This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages o
 
 ## Conclusion
 
-This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput for embedded applications.
+This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput. The processor was designed with flexibility in mind, allowing it to execute many of the standard RISC-V assembly instructions correctly, as it directly adapts general instruction codes for compatibility with existing RISC-V assemblers.
+
+While the current design has achieved significant improvements in performance, some enhancements were not completed due to time constraints. Notably, a two-bit dynamic branch predictor was intended to be implemented to improve branch prediction accuracy. This feature, if completed, would have further optimized instruction throughput by reducing branch mispredictions and their associated penalties.
+
+Future improvements that could further enhance the microprocessor’s capabilities include:
+
+- **Increasing data bit width**
+- **Out-of-Order Execution**
+- **Dynamic Branch Prediction**
+- **Speculative Execution**
+
+
+These enhancements, if implemented, could push the performance of the microprocessor even further, making it more suitable for a broader range of applications and more demanding computational tasks.
+
+---
