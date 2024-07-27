@@ -46,7 +46,7 @@ module NextPCLogic (
     output reg [7:0] next_pc,
     input wire branch1,
     input wire branch2,
-    input wire  [7:0]immdata
+    input wire signed [7:0] immdata
 );
 
      always @(*) begin
@@ -58,7 +58,7 @@ module NextPCLogic (
             end else if (branch1) begin
                 next_pc <= current_pc + (immdata * 4);
             end else if (branch2) begin
-                next_pc <= current_pc + (immdata * 4)+4;
+                next_pc <= current_pc + (immdata * 4) + 4;
             end else begin
                 next_pc <= current_pc + 8;
             end
