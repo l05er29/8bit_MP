@@ -61,7 +61,7 @@ In digital computing, various instruction set architectures (ISAs) exist, includ
 
 We have chosen the RISC architecture for our microprocessor due to its simplicity, efficiency, and adaptability.
 
-**Microprocessor Development Phases:**
+### **Microprocessor Development Phases:**
 
 1. **Initial Design (Mid-Evaluation):**  
    We explored research papers and online resources to understand ISA and microprocessor architecture. We completed a non-pipelined microprocessor capable of arithmetic and logical operations.
@@ -126,6 +126,8 @@ We implement basic instructions from the RV32I Base Integer Instruction Set. The
    - Address is computed relative to the program counter.
    - Used in: `BEQ`, `BNE`, `BLT`, `BGE`, `BLTU`, `BGEU`.
 
+ - A detailed explanation of instructions is given in the  [Currently Supported Instructions](#currently-supported-instructions) section.
+
 ## Memory Architecture
 
 The microprocessor employs the Harvard architecture, featuring separate memories for instructions and data. This approach enhances performance by allowing simultaneous access to both instruction and data memories.
@@ -167,7 +169,9 @@ The control unit generates control signals for both instructions based on the op
 
 ## Arithmetic Logic Unit (ALU)
 
-The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory. A list of arithmetic and logic operations performed by ALU is given in the  [Currently Supported Instructions](#currently-supported-instructions) section.
+- The Arithmetic Logic Unit (ALU) executes arithmetic operations like addition and subtraction, and logical operations such as AND, OR, and XOR. 
+- It processes data based on instructions, producing results that are then used by the rest of the processor, including writing them to registers or memory. 
+- A list of arithmetic and logic operations performed by ALU is given in the  [Currently Supported Instructions](#currently-supported-instructions) section.
 
 ## Superscalar Pipeline
 
