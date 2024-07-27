@@ -420,6 +420,8 @@ In the design of our superscalar processor, various strategies are employed to h
 **This is where we started ...**
                         
   - Schematic Diagram of Non-Pipelined Microprocessor
+  - ![image](https://github.com/user-attachments/assets/da627b6f-8f6b-4825-9ca8-28301f38782c)
+
    - Corresponding simulation for the non pipelined processor
   ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
 
