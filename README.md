@@ -432,7 +432,7 @@ In the design of our superscalar processor, various strategies are employed to h
   
    - Corresponding simulation for the non pipelined processor
   ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
-- The time taken for processing all the instructions was 1600ns .
+- The time taken for processing all the instructions was 1400ns .
 
 
 **And, This is where we ended ...**
@@ -442,7 +442,7 @@ In the design of our superscalar processor, various strategies are employed to h
 
  -  Corresponding simulation for the superscalar processor
  ![image](https://github.com/user-attachments/assets/6875dcb8-261d-4eb5-89a5-d989fb0d20ee)
-  -  Here the time taken for processing all the instructions is 160ns
+  -  Here the time taken for processing all the instructions is 150ns
   -  This makes this almost **10 times faster** and more efficent than the non pipelined microprocessor
   - The parallelism significantly boosted the performance of this microprocessor over the earlier  
 
