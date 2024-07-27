@@ -251,13 +251,17 @@ In the design of our superscalar processor, various strategies are employed to h
 
 3. **Write After Write (WAW) Hazards**:
    - **Dual Data Paths**: WAW hazards are possible in our parallel execution environment. To address this, we design the processor with two data paths where the sequentially latest instruction is always implemented in the second data path. If a WAW hazard occurs, the write data from the second data path is prioritized and written back into the register, ensuring the correct value is stored.
+   - 
+   -   -  **The following is one such example depicting a "READ AFTER WRITE" hazard where the second issued instruction has been stalled**
+   -  ![image](https://github.com/user-attachments/assets/32762072-0c31-4944-959f-9e9c69fe9881)
+
 
 #### Structural Hazards
 
 1. **Register File Access**:
    - **Simultaneous Read and Write**: During the read operation, if a register is being read from and simultaneously written to, the module prioritizes the written data. This means that the data being written (from `write_data_2` if `reg_write_2` is active) will be reflected in the read operation output rather than the old data.
-
-2. **Data Memory Access**:
+ 
+ 2. **Data Memory Access**:
    - **Memory Conflicts**: Simultaneous read and write operations on the same address from different data paths are possible. To handle this, the write data is bypassed to the read data port instead of reading the old data stored at that address. This ensures that the read operation reflects the most recent write operation's data, maintaining data integrity across the memory accesses.
 
 #### Control Hazards
@@ -425,17 +429,22 @@ In the design of our superscalar processor, various strategies are employed to h
 **This is where we started ...**
 - Schematic Diagram of Non-Pipelined Microprocessor
    ![image](https://github.com/user-attachments/assets/da627b6f-8f6b-4825-9ca8-28301f38782c)
+  
+   - Corresponding simulation for the non pipelined processor
+  ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
+- The time taken for processing all the instructions was 1600ns .
+
 
 **And, This is where we ended ...**
  - Schematic Diagram of Superscalar Microprocessor
 ![image](https://github.com/user-attachments/assets/6de86e54-10d9-4ea5-b2a1-d1e99a10c53d)
 
- - Corresponding simulation for the non pipelined processor
-  ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
 
  -  Corresponding simulation for the superscalar processor
  ![image](https://github.com/user-attachments/assets/6875dcb8-261d-4eb5-89a5-d989fb0d20ee)
-
+  -  Here the time taken for processing all the instructions is 160ns
+  -  This makes this almost **10 times faster** and more efficent than the non pipelined microprocessor
+  - The parallelism significantly boosted the performance of this microprocessor over the earlier  
 
 
 
@@ -469,60 +478,8 @@ The first two branches get executed and the program counter and the hazard signa
 
 - https://drive.google.com/drive/folders/1865gQ5SyB4dZ4EoLMbSYr67GkDQLMwet?usp=sharing   (Contains some research Papers and Notes)
 
-## Contributions
 
-**This project was a collaborative effort. Below are the contributions of each team member :**
 
-### Team Members of Team - 3
-
-#### 1. B.Dinesh Lakshman
-- **Role**: Project Lead
-- **Contributions**:
-  - Architecture design
-  - Debugging and testing
-  - Implementation of the Superscalar Architecuture
-  - Integration of Instruction Issuing Unit and Next PC Logic
-  - Designed Control Unit and ISA and Modified Modules to accomodate for the new data hazards etc...
-  - Documentation and scientific accuracy review
-
-#### [Teammate 1's Name]
-- **Role**: Hardware Designer
-- **Contributions**:
-  - Design and implementation of the ALU
-  - Development of branch and jump instruction support
-  - Debugging and testing
-
-#### [Teammate 2's Name]
-- **Role**: Software Developer
-- **Contributions**:
-  - Writing and testing assembly code for debugging
-  - Development of the instruction issuing unit module
-  - Software-based hazard detection
-
-#### [Teammate 3's Name]
-- **Role**: Research Analyst
-- **Contributions**:
-  - Conducted extensive research on ISA and microprocessor architecture
-  - Provided insights into pipelining and superscalar architecture
-  - Contributed to documentation on novel SIMD MAC and AF architecture
-
-#### [Teammate 4's Name]
-- **Role**: Documentation Specialist
-- **Contributions**:
-  - Managed project documentation
-  - Created diagrams for the README file
-  - Ensured clarity and completeness of documentation
-
-#### [Teammate 5's Name]
-- **Role**: Testing and Validation Engineer
-- **Contributions**:
-  - Performed extensive testing of all modules
-  - Developed test benches in Verilog
-  - Validated the performance and accuracy of the microprocessor
-
----
-
-Each entry should be tailored to the specific roles and contributions of your teammates. Make sure to give credit where it's due and highlight the key aspects of each person's work on the project.
 ## Conclusion
 
 This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput. The processor was designed with flexibility in mind, allowing it to execute many of the standard RISC-V assembly instructions correctly, as it directly adapts general instruction codes for compatibility with existing RISC-V assemblers.
