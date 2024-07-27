@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part of our **IITI SoC Project PS -3**. This design enhances instruction throughput by executing multiple instructions per clock cycle. Leveraging a superscalar architecture, this processor aims to achieve higher performance than the non-pipelined ones.
+Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as part of the **IITI SoC Project PS-3**. Implemented in **Verilog HDL**, this microprocessor is designed to significantly enhance instruction throughput by executing multiple instructions per clock cycle. By leveraging a sophisticated superscalar architecture, it aims to surpass the performance of traditional non-pipelined processors. The dual-pipeline design facilitates simultaneous execution of multiple instructions, thus optimizing computational efficiency and achieving superior processing capabilities.
 
 #### Team Members
 
