@@ -52,7 +52,9 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 9. [Pipeline Latches](#pipeline-latches)
 10. [Hazards](#hazards)
 11. [Currently Supported Instructions](#currently-supported-instructions)
-12. [Conclusion](#conclusion)
+12. [Verification & Results](#Verification-&-Results)
+13. [References](#References)
+14. [Conclusion](#conclusion)
   
 ## Architecture Overview
 
@@ -145,7 +147,7 @@ Our design aims to implement a superscalar architecture by giving the microproce
 To support dual instruction execution, additional control logic is required to handle dependencies and resource conflicts between the two instructions. This includes:
 
 - **Instruction Issuing Unit** : 
-The Instruction Issuing Unit (IIU) operates in the ID stage, decoding incoming instructions from the Instruction Memory and detecting operand dependencies. If a dependency is found, the second instruction is held in a register and a "rollback" signal adjusts the next-PC value. The held instruction is then issued in the following clock cycle.
+- The Instruction Issuing Unit (IIU) operates in the ID stage, decoding incoming instructions from the Instruction Memory and detecting operand dependencies. If a dependency is found, the second instruction is held in a register and a "rollback" signal adjusts the next-PC value. The held instruction is then issued in the following clock cycle.Dependencies include RAW hazard between first and second instruction and first instruction being a branch instruction.
 
 - **Next-PC Logic** :
 - Whenever the “rollback” signal is asserted in the ID stage,next PC value will be the address of next instruction (PC + 4), otherwise it is the address of the instruction after the next instruction (PC + 8). 
@@ -363,6 +365,25 @@ In the design of our superscalar processor, various strategies are employed to h
 - **SUB rd, x0, rs** computes the two's complement of the value in register `rs`, storing the result in register `rd`. This operation is used to implement the `NEG rd, rs` assembler pseudo-instruction, which negates the value in register `rs`.
 - In the same way many other pseudo instructions can be implemented by just manipulating the already existing instructions in the RISC-V ISA.
 - Detailed information about each instruction, their opcodes, and different function codes can be found [here](https://msyksphinz-self.github.io/riscv-isadoc/html/rvi.html#lui). This resource was also used as a reference while writing the ISA for our microprocessor.
+
+## Verification & Results
+
+This 8-bit dual pipeline superscalar RISC-V processor leverages the advantages of RISC architecture and superscalar execution to achieve high performance. By carefully managing hazards and optimizing the pipeline, this design aims to provide efficient instruction throughput for embedded applications.
+
+## References
+
+- https://msyksphinz-self.github.io/riscv-isadoc/html/rvi.html#auipc  (For Instructions)
+
+- http://shodhbhagirathi.iitr.ac.in:8081/jspui/handle/123456789/13119?mode=full  (Research Paper)
+
+- https://developers.google.com/mpact-sim/guides/riscv_binary_decoder#add_register-register_alu_instruction   (For ISA)
+
+- https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf (For ISA)
+
+- https://ijrpr.com/uploads/V5ISSUE4/IJRPR24834.pdf (For Microprocessor)
+
+- https://drive.google.com/drive/folders/1865gQ5SyB4dZ4EoLMbSYr67GkDQLMwet?usp=sharing   (Contains some research Papers and Notes)
+
 
 ## Conclusion
 
