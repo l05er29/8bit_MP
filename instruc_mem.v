@@ -1,12 +1,13 @@
 module instruc_mem(
     input [7:0] inst_address,                                         
-    output reg [31:0] instruction
-);                                                  
+    output reg [31:0] instruction1,
+    output reg [31:0] instruction2
+);                                                 
                                                                                      
     reg [7:0] inst_mem[120:0]; // inst_mem size = 88 bytes to accommodate 22 instructions
                                                                                      
     initial begin   
-        
+                                                                             
             {inst_mem[3], inst_mem[2], inst_mem[1], inst_mem[0]} = 32'h00a00093;  // 1    
             {inst_mem[7], inst_mem[6], inst_mem[5], inst_mem[4]} = 32'h01400113;  // 2    
           {inst_mem[11], inst_mem[10], inst_mem[9], inst_mem[8]} = 32'h01e00193; // 3    
@@ -29,21 +30,32 @@ module instruc_mem(
         {inst_mem[79], inst_mem[78], inst_mem[77], inst_mem[76]} = 32'h0211da33; // 20   
         {inst_mem[83], inst_mem[82], inst_mem[81], inst_mem[80]} = 32'h0211eab3; // 21   
         {inst_mem[87], inst_mem[86], inst_mem[85], inst_mem[84]} = 32'h0211fb33; // 22   
-        {inst_mem[91], inst_mem[90], inst_mem[89], inst_mem[88]} = 32'h00f00b93; // 23
-        {inst_mem[95], inst_mem[94], inst_mem[93], inst_mem[92]} = 32'h00abfc13; // 24
-        {inst_mem[99], inst_mem[98], inst_mem[97], inst_mem[96]} = 32'h014bec93; // 25
-    {inst_mem[103], inst_mem[102], inst_mem[101], inst_mem[100]} = 32'h01ebcd13;
-    {inst_mem[107], inst_mem[106], inst_mem[105], inst_mem[104]} = 32'h002b9d93;
-    {inst_mem[111], inst_mem[110], inst_mem[109], inst_mem[108]} = 32'h001bde13;
-    {inst_mem[115], inst_mem[114], inst_mem[113], inst_mem[112]} = 32'h014bae93;
-
+          {inst_mem[91], inst_mem[90], inst_mem[89], inst_mem[88]} = 32'h00f00b93;
+         {inst_mem[95], inst_mem[94], inst_mem[93], inst_mem[92]} = 32'h00abfc13;
+         {inst_mem[99], inst_mem[98], inst_mem[97], inst_mem[96]} = 32'h014bec93;
+        {inst_mem[103], inst_mem[102], inst_mem[101], inst_mem[100]} = 32'h01ebcd13;
+        {inst_mem[107], inst_mem[106], inst_mem[105], inst_mem[104]} = 32'h002b9d93;
+        {inst_mem[111], inst_mem[110], inst_mem[109], inst_mem[108]} = 32'h001bde13;
+        {inst_mem[115], inst_mem[114], inst_mem[113], inst_mem[112]} = 32'h014bae93;
+                                                      
+             
+             
+    
+    
+    
     end                                                                              
      
                                                                                 
-    always @ (inst_address) begin                                                  
-        instruction[7:0] = inst_mem[inst_address + 0];                   
-        instruction[15:8] = inst_mem[inst_address + 1];                  
-        instruction[23:16] = inst_mem[inst_address + 2];                 
-        instruction[31:24] = inst_mem[inst_address + 3];                 
+   always @ (inst_address) begin                                                  
+        instruction1[7:0] = inst_mem[inst_address + 0];                   
+        instruction1[15:8] = inst_mem[inst_address + 1];                  
+        instruction1[23:16] = inst_mem[inst_address + 2];                 
+        instruction1[31:24] = inst_mem[inst_address + 3];                 
+
+        instruction2[7:0] = inst_mem[inst_address + 4];                   
+        instruction2[15:8] = inst_mem[inst_address + 5];                  
+        instruction2[23:16] = inst_mem[inst_address + 6];                 
+        instruction2[31:24] = inst_mem[inst_address + 7];                 
     end                                                                              
 endmodule
+
