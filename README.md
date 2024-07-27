@@ -1,17 +1,8 @@
 # 8-bit Dual Pipeline Superscalar RISC-V Processor
 
-In digital computing, various instruction set architectures (ISAs) exist, including:
-
-- **RISC** (Reduced Instruction Set Computer)
-- **CISC** (Complex Instruction Set Computer)
-- **VLIW** (Very Long Instruction Word)
-- **EPIC** (Explicitly Parallel Instruction Computing)
-
-We have chosen the RISC architecture for our microprocessor due to its simplicity, efficiency, and adaptability.
-
 ## Introduction
 
-Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part of our IITI SoC Project PS -3. This design enhances instruction throughput by executing multiple instructions per clock cycle. Leveraging a superscalar architecture, this processor aims to achieve higher performance than the non-pipelined ones.
+Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part of our **IITI SoC Project PS -3**. This design enhances instruction throughput by executing multiple instructions per clock cycle. Leveraging a superscalar architecture, this processor aims to achieve higher performance than the non-pipelined ones.
 
 #### Team Members
 
@@ -27,6 +18,7 @@ Our 8-bit dual pipeline superscalar RISC-V microprocessor is designed as a part 
 - **5-Stage Pipeline: IF, ID, EX, MEM, WB**
 - **Harvard Architecture**
 - **RV32I Base Integer & RV32M Extensions** (Note: Some RV32I instructions are not supported)
+- **Supports 4 Addressing Modes**
 - **Two Integer ALUs**
 - **Issue and Complete Atmost 2 Instructions/Cycle**
 - **8-bit Instruction Fetch/Data Access**
@@ -41,25 +33,33 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 
 ## Contents
 
-Here's the updated structure with proper syntax for accessing the sections:
-
 1. [Architecture Overview](#architecture-overview)
 2. [Instruction Set Architecture](#instruction-set-architecture)
-3. [Memory Architecture](#memory-architecture)
-4. [Register File](#register-file)
-5. [Instruction Decoding and Immediate Data Extraction (Decoder)](#instruction-decoding-and-immediate-data-extraction-decoder)
-6. [Control Unit](#control-unit)
-7. [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
-8. [Superscalar Pipeline](#superscalar-pipeline)
-9. [Pipeline Stages](#pipeline-stages)
-10. [Pipeline Latches](#pipeline-latches)
-11. [Hazards](#hazards)
-12. [Currently Supported Instructions](#currently-supported-instructions)
-13. [Verification & Results](#verification--results)
-14. [References](#references)
-15. [Conclusion](#conclusion)
+3. [Addressing Modes ](#Addressing-Modes)
+4. [Memory Architecture](#memory-architecture)
+5. [Register File](#register-file)
+6. [Instruction Decoding and Immediate Data Extraction (Decoder)](#instruction-decoding-and-immediate-data-extraction-decoder)
+7. [Control Unit](#control-unit)
+8. [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
+9. [Superscalar Pipeline](#superscalar-pipeline)
+10. [Pipeline Stages](#pipeline-stages)
+11. [Pipeline Latches](#pipeline-latches)
+12. [Hazards](#hazards)
+13. [Currently Supported Instructions](#currently-supported-instructions)
+14. [Verification & Results](#verification--results)
+15. [References](#references)
+16. [Conclusion](#conclusion)
   
 ## Architecture Overview
+
+In digital computing, various instruction set architectures (ISAs) exist, including:
+
+- **RISC** (Reduced Instruction Set Computer)
+- **CISC** (Complex Instruction Set Computer)
+- **VLIW** (Very Long Instruction Word)
+- **EPIC** (Explicitly Parallel Instruction Computing)
+
+We have chosen the RISC architecture for our microprocessor due to its simplicity, efficiency, and adaptability.
 
 ## Instruction Set Architecture
 
@@ -86,6 +86,24 @@ We implement basic instructions from the RV32I Base Integer Instruction Set. The
   ```
   000 (unused) | immediate [28:25] | rs2 [24:20] | rs1 [19:15] | funct3 [14:12] | immediate [11:8] | 0 (unused) | opcode [6:0]
   ```
+
+## Addressing Modes  
+
+1. **Immediate Addressing**:
+   - Operand is directly specified in the instruction.
+   - Used in: `ADDI`, `SLTI`, `SLTIU`, `XORI`, `ORI`, `ANDI`, `SLLI`, `SRLI`.
+
+2. **Register Addressing**:
+   - Operand is specified in a register.
+   - Used in: `ADD`, `SUB`, `SLL`, `SRL`, `SLT`, `SLTU`, `SRA`, `XOR`, `AND`, `OR`.
+
+3. **Base + Offset (Displacement) Addressing**:
+   - Operand is at an address computed by adding an offset to a base register.
+   - Used in: `LW`, `SW`.
+
+4. **PC-Relative Addressing**:
+   - Address is computed relative to the program counter.
+   - Used in: `BEQ`, `BNE`, `BLT`, `BGE`, `BLTU`, `BGEU`.
 
 ## Memory Architecture
 
