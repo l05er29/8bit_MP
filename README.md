@@ -1,13 +1,15 @@
 # 8-bit Dual Pipeline Superscalar RISC-V Processor
 
-## Contributors:
+## Introduction
+
+Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as part of the **IITI SoC 2024 Project PS-3**. Implemented in **Verilog HDL**, this microprocessor is designed to significantly enhance instruction throughput by executing multiple instructions per clock cycle. By leveraging a sophisticated superscalar architecture, it aims to surpass the performance of traditional non-pipelined processors. The dual-pipeline design facilitates simultaneous execution of multiple instructions, thus optimizing computational efficiency and achieving superior processing capabilities.
+
+
+### Team Members (Team-3):
 - B.Dinesh Laxman (Team Lead) 
 - G Sushant Reddy
 - M Devi Amrutha
 - JL Manaswini
-## Introduction
-
-Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as part of the **IITI SoC 2024 Project PS-3**. Implemented in **Verilog HDL**, this microprocessor is designed to significantly enhance instruction throughput by executing multiple instructions per clock cycle. By leveraging a sophisticated superscalar architecture, it aims to surpass the performance of traditional non-pipelined processors. The dual-pipeline design facilitates simultaneous execution of multiple instructions, thus optimizing computational efficiency and achieving superior processing capabilities.
 
 ## Features
 
@@ -46,8 +48,7 @@ An **in-depth explanation** of our approach to designing the microprocessor and 
 13. [Currently Supported Instructions](#currently-supported-instructions)
 14. [Verification & Results](#verification--results)
 15. [References](#references)
-16. [Contributions](#Contributions)
-17. [Conclusion](#conclusion)
+16. [Conclusion](#conclusion)
   
 ## Architecture Overview
 
@@ -251,8 +252,8 @@ In the design of our superscalar processor, various strategies are employed to h
 
 3. **Write After Write (WAW) Hazards**:
    - **Dual Data Paths**: WAW hazards are possible in our parallel execution environment. To address this, we design the processor with two data paths where the sequentially latest instruction is always implemented in the second data path. If a WAW hazard occurs, the write data from the second data path is prioritized and written back into the register, ensuring the correct value is stored.
-   - 
-   -   -  **The following is one such example depicting a "READ AFTER WRITE" hazard where the second issued instruction has been stalled**
+     
+   - **The following is one such example depicting a "READ AFTER WRITE" hazard where the second issued instruction has been stalled**
    -  ![image](https://github.com/user-attachments/assets/32762072-0c31-4944-959f-9e9c69fe9881)
 
 
@@ -430,28 +431,28 @@ In the design of our superscalar processor, various strategies are employed to h
 - Schematic Diagram of Non-Pipelined Microprocessor
    ![image](https://github.com/user-attachments/assets/da627b6f-8f6b-4825-9ca8-28301f38782c)
   
-   - Corresponding simulation for the non pipelined processor
-  ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
-- The time taken for processing all the instructions was 1400ns .
-
-
 **And, This is where we ended ...**
  - Schematic Diagram of Superscalar Microprocessor
 ![image](https://github.com/user-attachments/assets/6de86e54-10d9-4ea5-b2a1-d1e99a10c53d)
 
+   - Corresponding simulation for the non pipelined processor
+  ![WhatsApp Image 2024-07-24 at 19 08 59_521d5cec](https://github.com/user-attachments/assets/14b79a59-34ed-4f18-b74f-d7bcc60f3cfa)
+- The time taken for processing all the instructions was around 1400ns.
+
 
  -  Corresponding simulation for the superscalar processor
  ![image](https://github.com/user-attachments/assets/6875dcb8-261d-4eb5-89a5-d989fb0d20ee)
-  -  Here the time taken for processing all the instructions is 200ns
-  -  This makes this almost **7 times faster** and more efficent than the non pipelined microprocessor
-  - The parallelism significantly boosted the performance of this microprocessor over the earlier  
+  -  Here the time taken for processing all the instructions is around 200ns.
 
 
 
-**Branch instructions** 
+- **Our superscalar microprocessor offers up to** **<span style="font-size: 4em; font-weight: bold;">700%</span>** **improvement in speed and efficiency compared to its non-pipelined counterpart. By harnessing advanced parallelism techniques, this microprocessor achieves unparalleled performance.**
 
-The branch handling in this superscalar processor is done in the decode stage itself. When the branch decision gets taken the program counter is updated according to the offset values form the immediate data, subsequently in which set the branch gets executed also plays a role and that is manageed accordingly by the rollback signal.
-The following are the instructions used for esting the branching unit and are executed along with other instruction in the instruction memory:
+
+### **Branch instructions** 
+
+The branch handling in this superscalar processor is done in the decode stage. When the branch decision gets taken the program counter is updated according to the offset values form the immediate data, subsequently in which set the branch gets executed, it also plays a role and that is managed accordingly by the rollback signal.
+The following are the instructions used for testing the branching unit and are executed along with other instructions in the instruction memory:
 ```
 BNEQ x2,x1,3
 BLT x2,x1,3
