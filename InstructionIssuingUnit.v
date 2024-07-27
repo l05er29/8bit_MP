@@ -26,7 +26,7 @@ module InstructionIssuingUnit (
             cycle_count <= 0;  // Reset cycle count on reset
         end else begin
             // Dependency check (simplified example)
-            if (instr1[11:7] == instr2[19:15] || instr1[11:7] == instr2[24:20]) begin
+            if (instr1[11:7] == instr2[19:15] || instr1[11:7] == instr2[24:20] || instr1[6:0]==7'b1100011) begin
                 has_dependency <= 1'b1;
                 hold_instr <= instr2;
                 rollback <= 1'b1;
