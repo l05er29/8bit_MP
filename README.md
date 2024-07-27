@@ -430,7 +430,7 @@ In the design of our superscalar processor, various strategies are employed to h
 **This is where we ended ...**
 ![image](https://github.com/user-attachments/assets/6de86e54-10d9-4ea5-b2a1-d1e99a10c53d)
   - Schematic Diagram of Superscalar Microprocessor
-![image](https://github.com/user-attachments/assets/4d459b6d-63d1-42ad-8d69-5b2b76bd7d5f)
+
 
 
 **Branch instructions** 
