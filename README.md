@@ -6,7 +6,7 @@ Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as 
 
 
 ### Team Members (Team-3):
-- B.Dinesh Laxman (Team Lead) 
+- B.Dinesh Lakshman (Team Lead) 
 - G Sushant Reddy
 - M Devi Amrutha
 - JL Manaswini
